@@ -5,20 +5,35 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] float speed;
+    private BaseEntityScript player;
+
+    private float lastDamageValue = 0;
 
     private void Start()
     {
+        player = GameObject.Find("Player").GetComponent<BaseEntityScript>();
     }
     void Update()
     {
         if (gameObject.activeSelf) { 
             transform.Translate(Vector2.right * Time.deltaTime * speed); //right because the bullet images are in a different direction from the player sprite
-
+            changeSize();
             CheckBounds();
         }
     }
 
+    private void changeSize() {
+        if (player != null && player.getDamage() != lastDamageValue)
+        {
 
+            float damage = player.getDamage();
+
+            // Change bullet scale based on player damage
+            float scale = Mathf.Clamp(damage / 100f, 0.5f, 20f); // Adjust the range as needed
+            transform.localScale = new Vector3(scale, scale, 1f);
+            lastDamageValue = damage;
+        }
+    }
     private void CheckBounds()
     {
         //gets the "size" of the screen

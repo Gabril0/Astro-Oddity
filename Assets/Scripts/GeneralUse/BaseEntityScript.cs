@@ -86,9 +86,12 @@ public class BaseEntityScript : MonoBehaviour
     {
         speed = originalSpeed;
     }
-    protected float getSpeed()
+    public float getSpeed()
     {
         return speed;
+    }
+    public float getDamage() {
+        return damage;
     }
     protected virtual void variation() {
     }
