@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : BaseEntityScript
+public class PlayerMovement : BaseEntityScript
 {
     protected override void variation()
     {
@@ -17,11 +17,4 @@ public class Movement : BaseEntityScript
         Vector3 movement = new Vector3(horizontalMovement, verticalMovement, 0).normalized * speed * Time.deltaTime;
         transform.Translate(movement, Space.World); //this is for it not to move weirdly with the cursor as an orbit
     }
-
-
-
-
-
-
-
 }

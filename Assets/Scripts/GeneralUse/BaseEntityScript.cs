@@ -12,6 +12,8 @@ public class BaseEntityScript : MonoBehaviour
     protected bool isAlive = true;
     protected float originalSpeed;
 
+    private bool isSlowedDownShooting = false;
+
     //bullet related
     protected float timeSinceLastShot = 0;
     protected BulletPoolManager bulletPoolManager;
@@ -52,6 +54,7 @@ public class BaseEntityScript : MonoBehaviour
     {
         if (conditionToShoot && timeSinceLastShot > bulletCoolDown)
         {
+            if (isSlowedDownShooting) { slowDown(); }
             Bullet bullet = bulletPoolManager.GetBullet();
             bullet.transform.position = transform.position;
             bullet.transform.rotation = transform.rotation * Quaternion.Euler(0, 0, -90);
@@ -60,6 +63,7 @@ public class BaseEntityScript : MonoBehaviour
         }
         else
         {
+            restoreSpeed();
             timeSinceLastShot += Time.deltaTime;
         }
     }
@@ -78,23 +82,19 @@ public class BaseEntityScript : MonoBehaviour
 
         transform.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
     }
-    protected void slowDown(float valueToSlow)
+    protected void slowDown()
     {
-        speed = valueToSlow; //the ideal use would be like player.slowDown(player.getSpeed/2)
+        speed = speed * 0.5f; //the ideal use would be like player.slowDown(player.getSpeed/2)
     }
     protected void restoreSpeed()
     {
         speed = originalSpeed;
     }
-    public float getSpeed()
-    {
-        return speed;
-    }
-    public float getDamage() {
-        return damage;
-    }
-    protected virtual void variation() {
-    }
-    protected virtual void variationDead() {
-    }
+    protected virtual void variation() {}
+    protected virtual void variationDead() {}
+    public float Speed { get => speed; set => speed = value; }
+    public float Health { get => health; set => health = value; }
+    public float Damage { get => damage; set => damage = value; }
+    public float BulletCoolDown { get => bulletCoolDown; set => bulletCoolDown = value; }
+    public bool IsSlowedDownShooting { get => isSlowedDownShooting; set => isSlowedDownShooting = value; }
 }

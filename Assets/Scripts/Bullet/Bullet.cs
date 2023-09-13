@@ -23,10 +23,10 @@ public class Bullet : MonoBehaviour
     }
 
     private void changeSize() {
-        if (player != null && player.getDamage() != lastDamageValue)
+        if (player != null && player.Damage != lastDamageValue)
         {
 
-            float damage = player.getDamage();
+            float damage = player.Damage;
 
             // Change bullet scale based on player damage
             float scale = Mathf.Clamp(damage / 100f, 0.5f, 20f); // Adjust the range as needed
