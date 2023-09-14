@@ -5,5 +5,6 @@ using UnityEngine;
 public interface Evolution
 {
     public void makeChanges();
+    public SpriteRenderer getImage();
 
 }
