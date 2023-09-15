@@ -118,8 +118,7 @@ MonoBehaviour:
   speed: 7.5
   health: 680
   damage: 100
-  bullet: {fileID: 2929854149448098888, guid: 37064326de56ca843a9317e0897cc173, type: 3}
-  coolDown: 0.2
+  bulletCoolDown: 0.2
 --- !u!114 &515151350
 MonoBehaviour:
   m_ObjectHideFlags: 0
