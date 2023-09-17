@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private void changeSize() {
+    protected void changeSize() {
         if (player != null && player.Damage != lastDamageValue)
         {
 
@@ -34,7 +34,7 @@ public class Bullet : MonoBehaviour
             lastDamageValue = damage;
         }
     }
-    private void CheckBounds()
+    protected void CheckBounds()
     {
         //gets the "size" of the screen
         float minX = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).x - transform.localScale.x;
