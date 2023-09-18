@@ -9,21 +9,38 @@ public class StarEnemy : BaseEntityScript
     [SerializeField] private Vector2 orbitCenter; 
     [SerializeField] private Vector2 movingOrbit;
     private float angle = 0f;
+    private Bullet[] bullets = new Bullet[5];
+    private float bulletAngle = 90;
 
     public void Start()
     {
-
-    }
-    protected override void variation()
-    {
-        // shoot(true);
+        bulletPoolManager = GetComponent<BulletPoolManager>();
     }
     private void FixedUpdate()
     {
         Orbit();
-        Invoke("ChangeOrbitCenter", 10f);
+        starShoot(true);
     }
 
+    protected void starShoot(bool conditionToShoot)
+    {
+        if (conditionToShoot && timeSinceLastShot > bulletCoolDown)
+        {
+            for (int i = 0; i < 5; i++)
+                bullets[i] = bulletPoolManager.GetBullet();
+            foreach (Bullet bullet in bullets)
+            {
+                bullet.transform.position = transform.position;
+                bullet.transform.rotation = transform.rotation * Quaternion.Euler(0, 0, bulletAngle);
+                bullet.gameObject.SetActive(true);
+                timeSinceLastShot = 0;
+
+                bulletAngle += 360 / 5;
+            }
+        }
+            else
+            timeSinceLastShot += Time.deltaTime;
+    }
     private void Orbit()
     {
         float moveX = orbitCenter.x + (Mathf.Sin(angle * frequency) * amplitude);
@@ -35,8 +52,9 @@ public class StarEnemy : BaseEntityScript
 
         angle += 10f;
     }
-    private void ChangeOrbitCenter()
-    {
-        orbitCenter = new Vector2(orbitCenter.x + movingOrbit.x, orbitCenter.y + movingOrbit.y);
-    }
+    // Uncomment if want to use the function
+    // private void ChangeOrbitCenter()
+    // {
+    //     orbitCenter = new Vector2(orbitCenter.x + movingOrbit.x, orbitCenter.y + movingOrbit.y);
+    // }
 }

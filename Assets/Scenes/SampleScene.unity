@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 1939316128}
   - component: {fileID: 1939316127}
   - component: {fileID: 1939316130}
+  - component: {fileID: 1939316131}
   m_Layer: 0
   m_Name: StarEnemy
   m_TagString: Untagged
@@ -238,7 +239,7 @@ Transform:
   m_GameObject: {fileID: 1939316126}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.43, y: 2.24, z: 0}
+  m_LocalPosition: {x: 5.34, y: 2.15, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -259,11 +260,25 @@ MonoBehaviour:
   speed: 10
   health: 680
   damage: 100
-  bulletCoolDown: 0.2
+  bulletCoolDown: 2
   amplitude: 5
   frequency: 0.01
   orbitCenter: {x: 0, y: 0}
   movingOrbit: {x: 0, y: 0}
+--- !u!114 &1939316131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939316126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49b94f1029c3c54dbe2e5b189a07d60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 942487570174338733, guid: 7042743bd55a37841910bd215c242970, type: 3}
+  initialPoolSize: 10
 --- !u!1001 &2762088150833297039
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -319,6 +334,10 @@ PrefabInstance:
     - target: {fileID: 2762088149896521091, guid: e7d9ce8128fc7f342b415bd44ab0569d, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2762088149896521091, guid: e7d9ce8128fc7f342b415bd44ab0569d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
