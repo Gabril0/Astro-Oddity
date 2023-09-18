@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5753277321914602475}
   - component: {fileID: 5753277321914602474}
   - component: {fileID: 515151350}
+  - component: {fileID: 1407587755}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -119,6 +120,9 @@ MonoBehaviour:
   health: 680
   damage: 100
   bulletCoolDown: 0.2
+  animator: {fileID: 1407587755}
+  transformationDurantion: 10
+  transformationCooldown: 10
 --- !u!114 &515151350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,3 +137,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2929854149448098888, guid: 37064326de56ca843a9317e0897cc173, type: 3}
   initialPoolSize: 10
+--- !u!95 &1407587755
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5753277321914602477}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d3440061602d4044f830b9e33f7fd918, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

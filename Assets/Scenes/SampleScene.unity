@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &808713690 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2762088149896521090, guid: e7d9ce8128fc7f342b415bd44ab0569d, type: 3}
+  m_PrefabInstance: {fileID: 2762088150833297039}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41439234a9d2d841a2f5c1dc1cbbb50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2762088150833297039
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -529,6 +540,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6716062211571144050, guid: 2c31dfd436aab3042af5ce509e013c9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 808713690}
+    - target: {fileID: 6716062211571144050, guid: 2c31dfd436aab3042af5ce509e013c9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: activateRight
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716062212097819262, guid: 2c31dfd436aab3042af5ce509e013c9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 808713690}
+    - target: {fileID: 6716062212097819262, guid: 2c31dfd436aab3042af5ce509e013c9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: activateLeft
+      objectReference: {fileID: 0}
     - target: {fileID: 6716062212518676930, guid: 2c31dfd436aab3042af5ce509e013c9f, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -616,6 +643,14 @@ PrefabInstance:
     - target: {fileID: 6716062212518676934, guid: 2c31dfd436aab3042af5ce509e013c9f, type: 3}
       propertyPath: m_Name
       value: ButtonSelector
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716062212909048264, guid: 2c31dfd436aab3042af5ce509e013c9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 808713690}
+    - target: {fileID: 6716062212909048264, guid: 2c31dfd436aab3042af5ce509e013c9f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: activateMiddle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c31dfd436aab3042af5ce509e013c9f, type: 3}

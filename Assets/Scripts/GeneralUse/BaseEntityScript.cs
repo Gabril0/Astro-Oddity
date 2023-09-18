@@ -52,18 +52,19 @@ public class BaseEntityScript : MonoBehaviour
     }
     protected void shoot(bool conditionToShoot)
     {
+        if (isSlowedDownShooting && conditionToShoot) { slowDown(); }
+        else { restoreSpeed(); }
         if (conditionToShoot && timeSinceLastShot > bulletCoolDown)
         {
-            if (isSlowedDownShooting) { slowDown(); }
             Bullet bullet = bulletPoolManager.GetBullet();
             bullet.transform.position = transform.position;
             bullet.transform.rotation = transform.rotation * Quaternion.Euler(0, 0, -90);
             bullet.gameObject.SetActive(true);
             timeSinceLastShot = 0;
+
         }
         else
         {
-            restoreSpeed();
             timeSinceLastShot += Time.deltaTime;
         }
     }
@@ -84,7 +85,7 @@ public class BaseEntityScript : MonoBehaviour
     }
     protected void slowDown()
     {
-        speed = speed * 0.5f; //the ideal use would be like player.slowDown(player.getSpeed/2)
+        speed = originalSpeed * 0.5f;
     }
     protected void restoreSpeed()
     {
