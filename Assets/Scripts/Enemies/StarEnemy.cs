@@ -10,7 +10,6 @@ public class StarEnemy : BaseEntityScript
     [SerializeField] private Vector2 movingOrbit;
     private float angle = 0f;
     private Bullet[] bullets = new Bullet[5];
-    private float bulletAngle = 90;
 
     public void Start()
     {
@@ -26,6 +25,7 @@ public class StarEnemy : BaseEntityScript
     {
         if (conditionToShoot && timeSinceLastShot > bulletCoolDown)
         {
+            float bulletAngle = 90;
             for (int i = 0; i < 5; i++)
                 bullets[i] = bulletPoolManager.GetBullet();
             foreach (Bullet bullet in bullets)
