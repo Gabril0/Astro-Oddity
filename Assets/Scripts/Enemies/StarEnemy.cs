@@ -52,6 +52,7 @@ public class StarEnemy : BaseEntityScript
 
         angle += 10f;
     }
+
     // Uncomment if want to use the function
     // private void ChangeOrbitCenter()
     // {
