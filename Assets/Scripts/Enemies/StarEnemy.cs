@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StarEnemy : BaseEntityScript
+public class StarEnemy : Dummy
 {
     [SerializeField] private float amplitude = 5f;
     [SerializeField] private float frequency = 0.01f;
@@ -10,11 +10,6 @@ public class StarEnemy : BaseEntityScript
     [SerializeField] private Vector2 movingOrbit;
     private float angle = 0f;
     private Bullet[] bullets = new Bullet[5];
-
-    public void Start()
-    {
-        bulletPoolManager = GetComponent<BulletPoolManager>();
-    }
     private void FixedUpdate()
     {
         Orbit();

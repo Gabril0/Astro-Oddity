@@ -45,15 +45,12 @@ public class GameManager : MonoBehaviour
         //Debug.Log("Choosed button:" + buttonChoosed);
         if (playerCanEvolute)
         {
-            Time.timeScale = 0.1f;
+            Time.timeScale = 0f;
             if (!isChoosing)
             {
                 isChoosing=true;
                 displayChoices();
             }
-        }
-        else {
-            Time.timeScale = 1f;
         }
     }
 
@@ -114,6 +111,7 @@ public class GameManager : MonoBehaviour
             }
             randomizeEvolutions();
             buttonChoosed = -1;
+            Time.timeScale = 1f;
         }
     }
 

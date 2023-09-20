@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireEnemy : BaseEntityScript
+public class FireEnemy : Dummy
 {
     [SerializeField] private float shootCoolDown = 2;
     [SerializeField] private float numberOfSpirals = 1;
@@ -15,6 +15,7 @@ public class FireEnemy : BaseEntityScript
             bulletAngle = 0;
     }
 
+    override
     protected void shoot(bool conditionToShoot)
     {
         

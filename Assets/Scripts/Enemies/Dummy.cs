@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class Dummy : BaseEntityScript
 {
-    protected override void variation()
-    {
-        shoot(true);
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("PlayerBullet"))

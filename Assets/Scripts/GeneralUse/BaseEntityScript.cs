@@ -38,7 +38,6 @@ public class BaseEntityScript : MonoBehaviour
     //explosion effect related
     [SerializeField] protected Animator animator;
     private float explosionTime = 0;
-    private bool animationScaleLock = false;
     void Start()
     {
         originalSpeed = speed;
@@ -85,7 +84,7 @@ public class BaseEntityScript : MonoBehaviour
 
         transform.position = newPosition;
     }
-    protected void shoot(bool conditionToShoot)
+    protected virtual void shoot(bool conditionToShoot)
     {
         if (isSlowedDownShooting && conditionToShoot) { slowDown(); }
         else { restoreSpeed(); }
@@ -117,6 +116,10 @@ public class BaseEntityScript : MonoBehaviour
 
         if (health <= 0)
         {
+            //Time.timeScale = 0.5f; //slowdown effect
+            //if(explosionTime > 0.5f){
+             //   Time.timeScale = 1;
+            //}
             collider2d.enabled = false;
             playDeathAnimation();
             IsExplosionOver();
@@ -125,17 +128,11 @@ public class BaseEntityScript : MonoBehaviour
 
     private void playDeathAnimation() {
         animator.SetBool("Explosion", true);
-        if (!animationScaleLock) {
-            transform.localScale = transform.localScale * 2;
-            animationScaleLock = true;
-        }
-        
     }
 
     private void IsExplosionOver()
     {
         AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
-        
         float animationLength = currentState.length;
         if (explosionTime > animationLength) {
             explosionEnd();
