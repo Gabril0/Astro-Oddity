@@ -13,8 +13,7 @@ public class GalacticCannon : MonoBehaviour, Evolution
     }
     public void makeChanges()
     {
-        player.Damage = player.Damage * 5f;
-        player.BulletCoolDown = player.BulletCoolDown * 0.25f;
+        player.Damage = player.Damage * 2f;
         player.IsSlowedDownShooting = true;
     }
     public SpriteRenderer getImage()
