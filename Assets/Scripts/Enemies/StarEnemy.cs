@@ -10,6 +10,12 @@ public class StarEnemy : Dummy
     [SerializeField] private Vector2 movingOrbit;
     private float angle = 0f;
     private Bullet[] bullets = new Bullet[5];
+
+    override
+    protected void startVariation()
+    {
+        orbitCenter = new  Vector2(transform.position.x,transform.position.y);
+    }
     private void FixedUpdate()
     {
         Orbit();

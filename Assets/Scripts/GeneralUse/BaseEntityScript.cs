@@ -38,6 +38,9 @@ public class BaseEntityScript : MonoBehaviour
     //explosion effect related
     [SerializeField] protected Animator animator;
     private float explosionTime = 0;
+
+    //Wave admin related
+    WaveManager waveManager;
     void Start()
     {
         originalSpeed = speed;
@@ -53,7 +56,11 @@ public class BaseEntityScript : MonoBehaviour
 
         collider2d = GetComponent<Collider2D>();
 
+        waveManager = GameObject.Find("WaveManager").GetComponent<WaveManager>();
+
         animator.SetBool("Explosion", false);
+
+        startVariation();
     }
 
     void Update()
@@ -142,6 +149,9 @@ public class BaseEntityScript : MonoBehaviour
     }
     private void explosionEnd() {
         isAlive = false;
+        if (CompareTag("Enemy")) {
+            waveManager.enemyDefeated();
+        }
         Destroy(gameObject);
     }
     protected void rotateToPosition(Vector3 position1, Vector3 position2)
@@ -198,9 +208,8 @@ public class BaseEntityScript : MonoBehaviour
         isHit = true;
     }
     protected virtual void variation() {}
-    protected virtual void variationDead() {
-        gameObject.SetActive(false);
-    }
+    protected virtual void variationDead() {    }
+    protected virtual void startVariation() { }
     public float Speed { get => speed; set => speed = value; }
     public float Health { get => health; set => health = value; }
     public float Damage { get => damage; set => damage = value; }

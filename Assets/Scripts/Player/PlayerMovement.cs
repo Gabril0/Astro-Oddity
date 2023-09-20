@@ -16,6 +16,11 @@ public class PlayerMovement : BaseEntityScript
     private float timeTransformed = 0;
     private float lastTimeSinceTransformation = 12;
 
+    //invunerability related
+    private bool isInvulnerable = false;
+    private float invulnerabilityCooldown = 0.5f;
+    private float currentInvulnerabilityTime = 0f;
+
     private bool usingNormalBullet = true, usingTransformationBulllet = false;
     protected override void variation()
     {
@@ -23,6 +28,15 @@ public class PlayerMovement : BaseEntityScript
         rotateToPosition((Camera.main.ScreenToWorldPoint(Input.mousePosition)), transform.position);
         move();
         shoot(isShooting);
+        if (isInvulnerable)
+        {
+            currentInvulnerabilityTime += Time.deltaTime;
+            if (currentInvulnerabilityTime >= invulnerabilityCooldown)
+            {
+                isInvulnerable = false;
+                currentInvulnerabilityTime = 0f;
+            }
+        }
         healthBarHide();
     }
     private void animationStuff() {
@@ -95,21 +109,23 @@ public class PlayerMovement : BaseEntityScript
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
-        if (collision.collider.CompareTag("Enemy"))
+        if (!isInvulnerable && collision.collider.CompareTag("Enemy"))
         {
             float damage = collision.gameObject.GetComponent<BaseEntityScript>().Damage;
             health -= damage;
             isHit = true;
+            isInvulnerable = true;
         }
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("EnemyBullet"))
+        if (!isInvulnerable && collision.CompareTag("EnemyBullet"))
         {
             float damage = collision.gameObject.GetComponent<Bullet>().Damage;
             health -= damage;
             isHit = true;
+            isInvulnerable = true;
         }
     }
 }
