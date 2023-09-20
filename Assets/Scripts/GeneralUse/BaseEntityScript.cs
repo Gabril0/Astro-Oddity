@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BaseEntityScript : MonoBehaviour
 {
@@ -9,30 +10,64 @@ public class BaseEntityScript : MonoBehaviour
     [SerializeField] protected float damage = 100;
     [SerializeField] protected float bulletCoolDown = 0.2f;
 
+    //healthBar related
+    private RectTransform healthBarPosition;
+    [SerializeField] Image healthBarImage;
+    [SerializeField] protected GameObject healthBarBG;
+
+    //base interactions
     protected bool isAlive = true;
     protected float originalSpeed;
-
+    protected float originalHealth; 
+    protected float lastDamageValue;
     private bool isSlowedDownShooting = false;
+    private Collider2D collider2d;
 
     //bullet related
     protected float timeSinceLastShot = 0;
     protected BulletPoolManager bulletPoolManager;
 
+    //sprite flash effect
+    protected SpriteRenderer spriteRenderer;
+    [SerializeField] protected float flashHitEffectDuration = 0.2f;
+    private Color flashColor = Color.red;
+    protected Color originalColor;
+    protected bool isFlashing = false;
+    protected bool isHit = false;
+
+    //explosion effect related
+    [SerializeField] protected Animator animator;
+    private float explosionTime = 0;
+    private bool animationScaleLock = false;
     void Start()
     {
         originalSpeed = speed;
+        originalHealth = health;
+        lastDamageValue = damage;
         bulletPoolManager = GetComponent<BulletPoolManager>();
+        bulletPoolManager.Damage = damage;
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color;
+
+        healthBarPosition = healthBarBG.GetComponent<RectTransform>();
+
+        collider2d = GetComponent<Collider2D>();
+
+        animator.SetBool("Explosion", false);
     }
 
     void Update()
     {
         if (isAlive)
         {
+            variation();
             checkBounds();
             checkHealth();
-            variation(); //this is where you put all the class specific methods
+            checkDamage(); 
+            checkHit();
         }
-        else variationDead(); //just  an alternative in case the class needs it
+        else variationDead(); 
     }
     private void checkBounds()
     {
@@ -52,27 +87,65 @@ public class BaseEntityScript : MonoBehaviour
     }
     protected void shoot(bool conditionToShoot)
     {
+        if (isSlowedDownShooting && conditionToShoot) { slowDown(); }
+        else { restoreSpeed(); }
         if (conditionToShoot && timeSinceLastShot > bulletCoolDown)
         {
-            if (isSlowedDownShooting) { slowDown(); }
             Bullet bullet = bulletPoolManager.GetBullet();
             bullet.transform.position = transform.position;
             bullet.transform.rotation = transform.rotation * Quaternion.Euler(0, 0, -90);
             bullet.gameObject.SetActive(true);
             timeSinceLastShot = 0;
+
         }
         else
         {
-            restoreSpeed();
             timeSinceLastShot += Time.deltaTime;
         }
     }
     private void checkHealth()
     {
+        Vector3 screenPos = Camera.main.WorldToViewportPoint(transform.position);
+
+        float verticalOffset = (screenPos.y <= 0.5f) ? 1.0f : -1.0f;
+
+        Vector3 offset = new Vector3(0, verticalOffset, 0);
+        healthBarPosition.position = transform.position + offset;
+        healthBarPosition.rotation = Quaternion.Euler(0, 0, 0);
+
+        healthBarImage.fillAmount = Mathf.Clamp01(health / originalHealth);
+
         if (health <= 0)
         {
-            isAlive = false;
+            collider2d.enabled = false;
+            playDeathAnimation();
+            IsExplosionOver();
         }
+    }
+
+    private void playDeathAnimation() {
+        animator.SetBool("Explosion", true);
+        if (!animationScaleLock) {
+            transform.localScale = transform.localScale * 2;
+            animationScaleLock = true;
+        }
+        
+    }
+
+    private void IsExplosionOver()
+    {
+        AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
+        
+        float animationLength = currentState.length;
+        if (explosionTime > animationLength) {
+            explosionEnd();
+        }
+        explosionTime += Time.deltaTime;
+
+    }
+    private void explosionEnd() {
+        isAlive = false;
+        Destroy(gameObject);
     }
     protected void rotateToPosition(Vector3 position1, Vector3 position2)
     { //use it to rotate to the cursor or to some other point
@@ -84,14 +157,53 @@ public class BaseEntityScript : MonoBehaviour
     }
     protected void slowDown()
     {
-        speed = speed * 0.5f; //the ideal use would be like player.slowDown(player.getSpeed/2)
+        speed = originalSpeed * 0.5f;
     }
     protected void restoreSpeed()
     {
         speed = originalSpeed;
     }
+    private void checkHit() {
+        if (isHit)
+        {
+            StartCoroutine(FlashSprite());
+            isHit = false;
+        }
+    }
+    protected void checkDamage() {
+        if (damage != lastDamageValue) {
+            bulletPoolManager.Damage = damage;
+            lastDamageValue = damage;
+        }
+    }
+    private IEnumerator FlashSprite()
+    {
+        if (isFlashing) yield break; // If already flashing, exit the coroutine
+
+        isFlashing = true; // Set the flashing flag to true
+
+        spriteRenderer.color = flashColor;
+
+        float flashStartTime = Time.time;
+
+        while (Time.time < flashStartTime + flashHitEffectDuration)
+        {
+            yield return null;
+        }
+
+        spriteRenderer.color = originalColor;
+        isFlashing = false;
+    }
+
+
+    public void SetIsHit()
+    {
+        isHit = true;
+    }
     protected virtual void variation() {}
-    protected virtual void variationDead() {}
+    protected virtual void variationDead() {
+        gameObject.SetActive(false);
+    }
     public float Speed { get => speed; set => speed = value; }
     public float Health { get => health; set => health = value; }
     public float Damage { get => damage; set => damage = value; }
