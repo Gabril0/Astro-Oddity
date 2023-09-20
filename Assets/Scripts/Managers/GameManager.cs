@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     private int[] randomIndex = new int[5];
     Hashtable evolutionTable = new Hashtable();
     private bool isChoosing = false;
+    GameObject[] choices = new GameObject[3];
 
     //Buttons and Canvas
     private GameObject buttonSelector;
@@ -27,8 +28,8 @@ public class GameManager : MonoBehaviour
         buttonSelector = GameObject.Find("ButtonSelector");
         buttonSelector.SetActive(false);
 
-        evolutionTable.Add(1,bigbang);
-        evolutionTable.Add(2,cosmicFlow);
+        evolutionTable.Add(1,cosmicFlow);
+        evolutionTable.Add(2,bigbang);
         evolutionTable.Add(3, cosmicHeal);
         evolutionTable.Add(4, cosmicStrength);
         evolutionTable.Add(5, galacticCannon);
@@ -41,7 +42,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Choosed button:" + buttonChoosed);
+        //Debug.Log("Choosed button:" + buttonChoosed);
         if (playerCanEvolute)
         {
             Time.timeScale = 0.1f;
@@ -76,13 +77,13 @@ public class GameManager : MonoBehaviour
 
     private void displayChoices()
     {
-        GameObject[] choices = new GameObject[3];
+
         buttonSelector.SetActive(true);
 
         for (int i = 0; i < 3; i++)
         {
-            // Assuming you already have GameObjects in the evolutionTable, and you don't need to instantiate new ones.
             choices[i] = (GameObject)evolutionTable[randomIndex[i]];
+            choices[i] = Instantiate((GameObject)evolutionTable[randomIndex[i]],new Vector3(10000,0,0),transform.rotation);
         }
         choiceLeft.sprite = choices[0].GetComponentInChildren<SpriteRenderer>().sprite;
         choiceMiddle.sprite = choices[1].GetComponentInChildren<SpriteRenderer>().sprite;
@@ -91,19 +92,34 @@ public class GameManager : MonoBehaviour
         choiceLeft.color = GetColorForChoice(0);
         choiceMiddle.color = GetColorForChoice(1);
         choiceRight.color = GetColorForChoice(2);
+    }
 
-        if (buttonChoosed > -1) {
+    public void confirmChoice()
+    {
+        if (buttonChoosed > -1)
+        {
             buttonSelector.SetActive(false);
             isChoosing = false;
             playerCanEvolute = false;
+
+
+            GameObject chosenEvolution = choices[buttonChoosed];
+
+            chosenEvolution.GetComponent<Evolution>().makeChanges();
+
+
+            for (int i = 0; i < 3; i++)
+            {
+                Destroy(choices[i]);
+            }
+            randomizeEvolutions();
             buttonChoosed = -1;
         }
-        //create the canvas, then get the buttons in this script, and assign the the images to the options, and then get the result of the option
     }
 
-    public void activateLeft() { Debug.Log("enteredLeft"); buttonChoosed = 0;Debug.Log(buttonChoosed); }
-    public void activateMiddle() { Debug.Log("enteredMiddle"); buttonChoosed = 1; Debug.Log(buttonChoosed); }
-    public void activateRight() { Debug.Log("enteredRight"); buttonChoosed = 2; Debug.Log(buttonChoosed); }
+    public void activateLeft() {buttonChoosed = 0;confirmChoice(); }
+    public void activateMiddle() {buttonChoosed = 1; confirmChoice(); }
+    public void activateRight() { buttonChoosed = 2; confirmChoice(); }
 
     private Color GetColorForChoice(int choiceIndex)
     {

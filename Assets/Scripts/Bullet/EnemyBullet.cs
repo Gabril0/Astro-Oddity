@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StarEnemyBullet : Bullet
+public class EnemyBullet : Bullet
 {
-    private BaseEntityScript starEnemy;
+    private BaseEntityScript enemy;
     // Start is called before the first frame update
     void Start()
     {
-        starEnemy = GameObject.Find("StarEnemy").GetComponent<BaseEntityScript>();
+        enemy = GameObject.FindWithTag("Enemy").GetComponent<BaseEntityScript>();
     }
 
 }
