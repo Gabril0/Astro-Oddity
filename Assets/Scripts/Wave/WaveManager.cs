@@ -36,7 +36,7 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Go to next stage");
+            //Debug.Log("Go to next stage");
         }
     }
 

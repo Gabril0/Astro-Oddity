@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
 
     //Evolutions
     [SerializeField] GameObject bigbang, cosmicFlow, cosmicHeal, cosmicStrength, galacticCannon, overWeight, storedEnergy, suddenDeath; //manually assign these
+
+    public bool PlayerCanEvolute { get => playerCanEvolute; set => playerCanEvolute = value; }
+
     void Start()
     {
         choiceLeft = GameObject.Find("ButtonLeft").GetComponent<Image>();
@@ -43,7 +46,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         //Debug.Log("Choosed button:" + buttonChoosed);
-        if (playerCanEvolute)
+        if (PlayerCanEvolute)
         {
             Time.timeScale = 0f;
             if (!isChoosing)
@@ -97,7 +100,7 @@ public class GameManager : MonoBehaviour
         {
             buttonSelector.SetActive(false);
             isChoosing = false;
-            playerCanEvolute = false;
+            PlayerCanEvolute = false;
 
 
             GameObject chosenEvolution = choices[buttonChoosed];

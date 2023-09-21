@@ -14,6 +14,7 @@ public class BaseEntityScript : MonoBehaviour
     private RectTransform healthBarPosition;
     [SerializeField] Image healthBarImage;
     [SerializeField] protected GameObject healthBarBG;
+    private float healthBarDistance = 0.75f;
 
     //base interactions
     protected bool isAlive = true;
@@ -41,6 +42,9 @@ public class BaseEntityScript : MonoBehaviour
 
     //Wave admin related
     WaveManager waveManager;
+
+    //Evolution trigger
+    private GameManager gameManager;
     void Start()
     {
         originalSpeed = speed;
@@ -49,18 +53,29 @@ public class BaseEntityScript : MonoBehaviour
         bulletPoolManager = GetComponent<BulletPoolManager>();
         bulletPoolManager.Damage = damage;
 
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
 
         healthBarPosition = healthBarBG.GetComponent<RectTransform>();
 
         collider2d = GetComponent<Collider2D>();
+        collider2d.enabled = false;
 
         waveManager = GameObject.Find("WaveManager").GetComponent<WaveManager>();
 
         animator.SetBool("Explosion", false);
 
+        if (health > 1000)
+        {
+            healthBarImage.color = Color.yellow;
+            healthBarDistance = 1.5f;
+        }
         startVariation();
+
+        StartCoroutine(EnableColliderAfterDelay(1.0f)); //this works for the Player not get hit while the enemies are spawning
     }
 
     void Update()
@@ -73,7 +88,6 @@ public class BaseEntityScript : MonoBehaviour
             checkDamage(); 
             checkHit();
         }
-        else variationDead(); 
     }
     private void checkBounds()
     {
@@ -113,7 +127,7 @@ public class BaseEntityScript : MonoBehaviour
     {
         Vector3 screenPos = Camera.main.WorldToViewportPoint(transform.position);
 
-        float verticalOffset = (screenPos.y <= 0.5f) ? 1.0f : -1.0f;
+        float verticalOffset = (screenPos.y <= 0.5f) ? healthBarDistance : -healthBarDistance;
 
         Vector3 offset = new Vector3(0, verticalOffset, 0);
         healthBarPosition.position = transform.position + offset;
@@ -149,6 +163,7 @@ public class BaseEntityScript : MonoBehaviour
     }
     private void explosionEnd() {
         isAlive = false;
+        variationDead();
         if (CompareTag("Enemy")) {
             waveManager.enemyDefeated();
         }
@@ -202,6 +217,16 @@ public class BaseEntityScript : MonoBehaviour
         isFlashing = false;
     }
 
+    private IEnumerator EnableColliderAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        collider2d.enabled = true; // Enable the collider after the delay
+    }
+
+    protected void enableEvolution() {
+        gameManager.PlayerCanEvolute = true;
+    }
+
 
     public void SetIsHit()
     {
@@ -211,7 +236,7 @@ public class BaseEntityScript : MonoBehaviour
     protected virtual void variationDead() {    }
     protected virtual void startVariation() { }
     public float Speed { get => speed; set => speed = value; }
-    public float Health { get => health; set => health = value; }
+    public float Health { get => health; set => health = value;}
     public float Damage { get => damage; set => damage = value; }
     public float BulletCoolDown { get => bulletCoolDown; set => bulletCoolDown = value; }
     public bool IsSlowedDownShooting { get => isSlowedDownShooting; set => isSlowedDownShooting = value; }
