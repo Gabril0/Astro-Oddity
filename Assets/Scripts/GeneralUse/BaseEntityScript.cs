@@ -23,6 +23,7 @@ public class BaseEntityScript : MonoBehaviour
     protected float lastDamageValue;
     private bool isSlowedDownShooting = false;
     private Collider2D collider2d;
+    protected PlayerMovement player;
 
     //bullet related
     protected float timeSinceLastShot = 0;
@@ -66,6 +67,8 @@ public class BaseEntityScript : MonoBehaviour
 
         waveManager = GameObject.Find("WaveManager").GetComponent<WaveManager>();
 
+        player = GameObject.Find("Player").GetComponent<PlayerMovement>();
+
         animator.SetBool("Explosion", false);
 
         if (health > 1000)
@@ -108,7 +111,7 @@ public class BaseEntityScript : MonoBehaviour
     protected virtual void shoot(bool conditionToShoot)
     {
         if (isSlowedDownShooting && conditionToShoot) { slowDown(); }
-        else { restoreSpeed(); }
+        else if(isSlowedDownShooting && !conditionToShoot) { restoreSpeed(); }
         if (conditionToShoot && timeSinceLastShot > bulletCoolDown)
         {
             Bullet bullet = bulletPoolManager.GetBullet();
