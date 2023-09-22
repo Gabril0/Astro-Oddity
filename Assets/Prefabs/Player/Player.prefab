@@ -303,6 +303,9 @@ MonoBehaviour:
   healthBarBG: {fileID: 5998280474750151665}
   flashHitEffectDuration: 0.5
   animator: {fileID: 1407587755}
+  multipleShotCooldown: 1
+  movementCooldown: 1
+  movementDuration: 1
   playerBullet: {fileID: 2929854149448098888, guid: 37064326de56ca843a9317e0897cc173, type: 3}
   transformationBullet: {fileID: 8038388310739094731, guid: 72a4c553f8c8db64abfa83a3bd2c4787, type: 3}
   transformationDurantion: 10

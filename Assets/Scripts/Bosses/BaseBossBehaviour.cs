@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class BaseBossBehaviour : Dummy
 {
+    [SerializeField] bool triggerEvolution = false;
     override
     protected void variationDead()
     {
-        enableEvolution();
+        if(triggerEvolution) enableEvolution();
     }
 }

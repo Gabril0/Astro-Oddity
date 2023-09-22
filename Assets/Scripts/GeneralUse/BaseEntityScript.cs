@@ -51,7 +51,7 @@ public class BaseEntityScript : MonoBehaviour
     private GameManager gameManager;
 
     //Multiple bullet
-    [SerializeField] float multipleShotCooldown = 1;
+    [SerializeField] protected float multipleShotCooldown = 1;
 
     //Random move
     [SerializeField] float movementCooldown = 1;
@@ -85,11 +85,6 @@ public class BaseEntityScript : MonoBehaviour
 
         animator.SetBool("Explosion", false);
 
-        if (health > 1000)
-        {
-            healthBarImage.color = Color.yellow;
-            healthBarDistance = 1.5f;
-        }
         startVariation();
 
         StartCoroutine(EnableColliderAfterDelay(1.0f)); //this works for the Player not get hit while the enemies are spawning
@@ -151,6 +146,11 @@ public class BaseEntityScript : MonoBehaviour
         healthBarPosition.rotation = Quaternion.Euler(0, 0, 0);
 
         healthBarImage.fillAmount = Mathf.Clamp01(health / originalHealth);
+        if (health > 1000)
+        {
+            healthBarImage.color = Color.yellow;
+            if (CompareTag("Enemy")) healthBarDistance = 1.5f;
+        }
 
         if (health <= 0)
         {
@@ -285,7 +285,16 @@ public class BaseEntityScript : MonoBehaviour
         currentTime += Time.deltaTime;
     }
 
+    public void goToPosition(float x, float y, float speed) { //goes to the position comparing to the current object position
+        Vector3 currentPosition = transform.position;
+        Vector3 targetPosition = new Vector3(x, y, currentPosition.z);
 
+        float distance = Vector3.Distance(currentPosition, targetPosition);
+        float realSpeed = distance * speed;
+
+        Vector3 direction = (targetPosition - currentPosition).normalized;
+        transform.position += direction * realSpeed * Time.deltaTime;
+    }
 
     public void SetIsHit()
     {
