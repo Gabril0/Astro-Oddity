@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static Unity.Burst.Intrinsics.X86.Sse4_2;
 
 public class BaseEntityScript : MonoBehaviour
 {
@@ -46,6 +49,17 @@ public class BaseEntityScript : MonoBehaviour
 
     //Evolution trigger
     private GameManager gameManager;
+
+    //Multiple bullet
+    [SerializeField] float multipleShotCooldown = 1;
+
+    //Random move
+    [SerializeField] float movementCooldown = 1;
+    [SerializeField] float movementDuration = 1;
+    private Vector2 moveDirection = Vector2.zero;
+    private float timeSinceMultipleShot = 0;
+    private bool isMoving = false;
+    private float currentTime = 0f;
     void Start()
     {
         originalSpeed = speed;
@@ -229,6 +243,48 @@ public class BaseEntityScript : MonoBehaviour
     protected void enableEvolution() {
         gameManager.PlayerCanEvolute = true;
     }
+
+    protected void multipleShot(int numbersOfBullets)
+    {//function that shoots the number of bullet specified in an equal angle
+        float angle = 360 / numbersOfBullets;
+        if (timeSinceMultipleShot > multipleShotCooldown)
+        {
+            for (int i = 0; i <= numbersOfBullets; i++)
+            {
+                Bullet bullet = bulletPoolManager.GetBullet();
+                bullet.gameObject.SetActive(true);
+                Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, angle));
+                angle += 360 / numbersOfBullets;
+            }
+            timeSinceMultipleShot = 0;
+        }
+        timeSinceMultipleShot += Time.deltaTime;
+    }
+
+    protected void randomMovement()
+    {
+        if (!isMoving)
+        {
+            if (currentTime >= movementCooldown)
+            {
+                isMoving = true;
+                currentTime = 0f;
+                moveDirection = UnityEngine.Random.insideUnitCircle.normalized; 
+            }
+        }
+        else
+        {
+            transform.Translate(moveDirection * speed * Time.deltaTime);        
+
+            if (currentTime >= movementDuration)
+            {
+                isMoving = false;
+                currentTime = 0f;
+            }
+        }
+        currentTime += Time.deltaTime;
+    }
+
 
 
     public void SetIsHit()

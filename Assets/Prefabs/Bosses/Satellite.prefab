@@ -283,7 +283,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9043429783263737833}
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -291,7 +291,7 @@ Transform:
   - {fileID: 2023572071}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9043429783263737748
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -395,13 +395,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   health: 10000
-  damage: 100
+  damage: 50
   bulletCoolDown: 0.2
   healthBarImage: {fileID: 1119199342}
   healthBarBG: {fileID: 472418825}
   flashHitEffectDuration: 0.2
   animator: {fileID: 9043429783263737751}
-  multipleShotCooldown: 1
+  multipleShotCooldown: 3
+  movementCooldown: 1
+  movementDuration: 1
 --- !u!95 &9043429783263737751
 Animator:
   serializedVersion: 4
@@ -434,5 +436,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b49b94f1029c3c54dbe2e5b189a07d60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 6099443013711786006, guid: bc018bf5b625f0441b50ae65d2419d19, type: 3}
+  bulletPrefab: {fileID: 1833927799909735735, guid: 0f52abcba55e130479aa463f4b6b44b9, type: 3}
   initialPoolSize: 10

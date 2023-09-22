@@ -19,8 +19,7 @@ public class Bullet : MonoBehaviour
     }
 
     private void changeSize() {
-        // Change bullet scale based on shooter damage
-        float scale = Mathf.Clamp(damage / 100f, 0.5f, 20f); // Adjust the range as needed
+        float scale = Mathf.Clamp(damage / 50f, 0.5f, 18f); 
         transform.localScale = new Vector3(scale, scale, 1f);
     }
     protected void CheckBounds()
