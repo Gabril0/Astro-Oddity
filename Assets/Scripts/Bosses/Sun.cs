@@ -6,7 +6,6 @@ public class Sun : BaseBossBehaviour
 {
     private float stateTime = 0;
     private float stateCooldown = 5;
-    private int randomNumber = 0;
     private float elapsedTimeState2 = 0;
     private int currentState = 0;
 
@@ -22,7 +21,7 @@ public class Sun : BaseBossBehaviour
         {
 
             currentState = Random.Range(1, 4);
-            stateTime = 0; // Reset the state timer
+            stateTime = 0;
         }
         switch (currentState)
         {

@@ -20,7 +20,7 @@ public class BaseEntityScript : MonoBehaviour
     private float healthBarDistance = 0.75f;
 
     //base interactions
-    protected bool isAlive = true;
+    private bool isAlive = true;
     protected float originalSpeed;
     protected float originalHealth; 
     protected float lastDamageValue;
@@ -92,7 +92,7 @@ public class BaseEntityScript : MonoBehaviour
 
     void Update()
     {
-        if (isAlive)
+        if (IsAlive)
         {
             variation();
             checkBounds();
@@ -179,7 +179,7 @@ public class BaseEntityScript : MonoBehaviour
 
     }
     private void explosionEnd() {
-        isAlive = false;
+        IsAlive = false;
         variationDead();
         if (CompareTag("Enemy")) {
             waveManager.enemyDefeated();
@@ -308,4 +308,5 @@ public class BaseEntityScript : MonoBehaviour
     public float Damage { get => damage; set => damage = value; }
     public float BulletCoolDown { get => bulletCoolDown; set => bulletCoolDown = value; }
     public bool IsSlowedDownShooting { get => isSlowedDownShooting; set => isSlowedDownShooting = value; }
+    public bool IsAlive { get => isAlive; set => isAlive = value; }
 }

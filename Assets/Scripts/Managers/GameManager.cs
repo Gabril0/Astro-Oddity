@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
@@ -10,12 +11,18 @@ public class GameManager : MonoBehaviour
     Hashtable evolutionTable = new Hashtable();
     private bool isChoosing = false;
     GameObject[] choices = new GameObject[3];
+    private PlayerMovement player;
 
     //Buttons and Canvas
     private GameObject buttonSelector;
     private Image choiceLeft, choiceRight, choiceMiddle;
     private int buttonChoosed = -1; //this is used to know what option was clicked, -1 means that none until now, 0 is left, 1 middle, 2 right
 
+    //DeathCanvas
+    private GameObject deathCanvas;
+
+    //Pause Menu
+    private GameObject pauseMenu;
 
     //Evolutions
     [SerializeField] GameObject bigbang, cosmicFlow, cosmicHeal, cosmicStrength, galacticCannon, overWeight, storedEnergy, suddenDeath; //manually assign these
@@ -24,12 +31,22 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1.0f;
+
         choiceLeft = GameObject.Find("ButtonLeft").GetComponent<Image>();
         choiceMiddle = GameObject.Find("ButtonMiddle").GetComponent<Image>();
         choiceRight = GameObject.Find("ButtonRight").GetComponent<Image>();
 
+        player = GameObject.Find("Player").GetComponent<PlayerMovement>();
+
+        deathCanvas = GameObject.Find("DeathCanvas");
+        deathCanvas.SetActive(false);
+
         buttonSelector = GameObject.Find("ButtonSelector");
         buttonSelector.SetActive(false);
+
+        pauseMenu = GameObject.Find("Pause");
+        pauseMenu.SetActive(false);
 
         evolutionTable.Add(1,cosmicFlow);
         evolutionTable.Add(2,bigbang);
@@ -54,7 +71,22 @@ public class GameManager : MonoBehaviour
                 isChoosing=true;
                 displayChoices();
             }
+            
         }
+        if (!player.IsAlive) {
+            deathCanvas.SetActive(true);
+            Time.timeScale = 0f;
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                SceneManager.LoadScene("SampleScene");
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Time.timeScale = 0f;
+            pauseMenu.SetActive(true);
+
+        }
+
     }
 
     private void randomizeEvolutions()
@@ -121,6 +153,16 @@ public class GameManager : MonoBehaviour
     public void activateLeft() {buttonChoosed = 0;confirmChoice(); }
     public void activateMiddle() {buttonChoosed = 1; confirmChoice(); }
     public void activateRight() { buttonChoosed = 2; confirmChoice(); }
+
+    public void buttonGoMenu() {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void buttonContinuePause() {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+    }
 
     private Color GetColorForChoice(int choiceIndex)
     {

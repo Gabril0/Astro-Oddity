@@ -22,6 +22,11 @@ public class PlayerMovement : BaseEntityScript
     private float currentInvulnerabilityTime = 0f;
 
     private bool usingNormalBullet = true, usingTransformationBulllet = false;
+
+    public bool IsTransformed { get => isTransformed; set => isTransformed = value; }
+    public float TransformationDurantion { get => transformationDurantion; set => transformationDurantion = value; }
+    public float LastTimeSinceTransformation { get => lastTimeSinceTransformation; set => lastTimeSinceTransformation = value; }
+
     protected override void variation()
     {
         animationStuff();
@@ -41,7 +46,7 @@ public class PlayerMovement : BaseEntityScript
     }
     private void animationStuff() {
         animator.SetBool("isShooting", isShooting);
-        animator.SetBool("isTransformed", isTransformed);
+        animator.SetBool("isTransformed", IsTransformed);
     }
     private void move() {
         float verticalMovement = Input.GetAxisRaw("Vertical");
@@ -56,23 +61,24 @@ public class PlayerMovement : BaseEntityScript
     }
 
     private void transformation() {
-        if (timeTransformed < transformationDurantion && isTransformed)
+        if (timeTransformed < TransformationDurantion && IsTransformed)
         {
             timeTransformed += Time.deltaTime;
         }
-        else if(isTransformed)
+        else if(IsTransformed)
         {
             timeTransformed = 0;
-            lastTimeSinceTransformation = 0;
-            isTransformed = false;
+            LastTimeSinceTransformation = 0;
+            IsTransformed = false;
             damage *= 0.5f;
             bulletCoolDown *= 2f;
             speed *= 0.75f;
         }
-        if (Input.GetKeyDown(KeyCode.F) && (timeTransformed < transformationDurantion) && (lastTimeSinceTransformation > transformationCooldown) && !isTransformed)
+        if (Input.GetKeyDown(KeyCode.F) && (timeTransformed < TransformationDurantion) && (LastTimeSinceTransformation > transformationCooldown) && !IsTransformed)
         {
             float shootRotation = 0;
-            isTransformed = true;
+            IsTransformed = true;
+            isInvulnerable = true;
             damage *= 2;
             bulletCoolDown *= 0.5f;
             speed *= 1.25f;
@@ -84,19 +90,19 @@ public class PlayerMovement : BaseEntityScript
             }
 
         }
-        if (timeTransformed < 1.3f && isTransformed) {
+        if (timeTransformed < 1.3f && IsTransformed) {
             isShooting = false;
         }
-        lastTimeSinceTransformation += Time.deltaTime;
+        LastTimeSinceTransformation += Time.deltaTime;
     }
 
     private void changeBullet() {
-        if (usingNormalBullet && isTransformed) {
+        if (usingNormalBullet && IsTransformed) {
             bulletPoolManager.SetBulletType(transformationBullet);
             usingNormalBullet = false;
             usingTransformationBulllet = true;
         }
-        if (!isTransformed && usingTransformationBulllet) {
+        if (!IsTransformed && usingTransformationBulllet) {
             bulletPoolManager.SetBulletType(playerBullet);
             usingTransformationBulllet = false;
             usingNormalBullet = true;
