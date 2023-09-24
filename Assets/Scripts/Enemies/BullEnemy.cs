@@ -18,12 +18,13 @@ public class BullEnemy : BaseEntityScript
     {
         if(lockOnPlayer)
         {
-            playerPosition = player.transform.position;
+            // playerPosition = player.transform.position;
+            rotateToPosition(player.transform.position, transform.position);
             lockOnPlayer = false;
         }
         if (!locked)
         {
-            transform.position = Vector2.MoveTowards(transform.position, playerPosition, Time.deltaTime * speed);
+            transform.Translate(Vector2.down * speed * Time.deltaTime);
         }
         if (timeSinceLastShot > bulletCoolDown)
         {
