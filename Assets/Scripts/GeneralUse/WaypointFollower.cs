@@ -8,8 +8,7 @@ public class WaypointFollower : MonoBehaviour
     [SerializeField] private float followerSpeed = 2f;
     private int currentIndex = 0;
 
-    // Update is called once per frame
-    void Update()
+    public float Follow()
     {
         if (Vector2.Distance(waypoints[currentIndex].transform.position, transform.position) < .1f)
         {
@@ -18,5 +17,7 @@ public class WaypointFollower : MonoBehaviour
                 currentIndex = 0;
         }
         transform.position = Vector2.MoveTowards(transform.position, waypoints[currentIndex].transform.position, Time.deltaTime * followerSpeed);
+
+        return Vector2.Distance(waypoints[currentIndex].transform.position, transform.position);
     }
 }
