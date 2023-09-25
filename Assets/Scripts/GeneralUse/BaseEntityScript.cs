@@ -96,9 +96,14 @@ public class BaseEntityScript : MonoBehaviour
         {
             variation();
             checkBounds();
-            checkHealth();
-            checkDamage(); 
-            checkHit();
+            if (gameObject.tag == "Enemy" && GameObject.Find("ShieldEnemy") != null && gameObject.name != "ShieldEnemy")
+            {}
+            else
+            {
+                checkHealth();
+                checkDamage();
+                checkHit();
+            }
         }
     }
     private void checkBounds()

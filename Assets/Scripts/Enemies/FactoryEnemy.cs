@@ -14,7 +14,7 @@ public class FactoryEnemy : Dummy
     {
         if (timeSinceLastShot > bulletCoolDown)
         {
-            Instantiate(enemy, new Vector3(-0.5f,transform.position.y,transform.position.z),transform.rotation);
+            Instantiate(enemy, transform.position, transform.rotation);
             timeSinceLastShot = 0;
         }
         else

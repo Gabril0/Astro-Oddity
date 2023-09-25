@@ -127,5 +127,11 @@ public class PlayerMovement : BaseEntityScript
             isHit = true;
             isInvulnerable = true;
         }
+        if (!isInvulnerable && collision.CompareTag("Enemy")) {
+            float damage = collision.gameObject.GetComponent<BaseEntityScript>().Damage;
+            health -= damage;
+            isHit = true;
+            isInvulnerable = true;
+        }
     }
 }

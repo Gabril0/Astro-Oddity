@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BullEnemy : BaseEntityScript
+public class BullEnemy : Dummy
 {
     private GameObject player;
     private Vector2 playerPosition;
     private bool locked = true;
     private bool lockOnPlayer = false;
 
-    void Start()
+    void Awake()
     {
         player = GameObject.Find("Player");
     }
@@ -25,6 +25,10 @@ public class BullEnemy : BaseEntityScript
         if (!locked)
         {
             transform.Translate(Vector2.down * speed * Time.deltaTime);
+        }
+        else
+        {
+            rotateToPosition(player.transform.position, transform.position);
         }
         if (timeSinceLastShot > bulletCoolDown)
         {
