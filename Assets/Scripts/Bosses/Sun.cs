@@ -42,6 +42,7 @@ public class Sun : BaseBossBehaviour
         if (elapsedTimeState1 < 0.3f) {
 
             multipleShot(15);
+            elapsedTimeState1 = 0;
         }
 
     }

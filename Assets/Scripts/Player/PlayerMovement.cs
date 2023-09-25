@@ -23,6 +23,10 @@ public class PlayerMovement : BaseEntityScript
 
     private bool usingNormalBullet = true, usingTransformationBulllet = false;
 
+    //Sound Effects
+    [SerializeField] AudioClip transformationSound;
+    [SerializeField] AudioClip transformationEnd;
+
     public bool IsTransformed { get => isTransformed; set => isTransformed = value; }
     public float TransformationDurantion { get => transformationDurantion; set => transformationDurantion = value; }
     public float LastTimeSinceTransformation { get => lastTimeSinceTransformation; set => lastTimeSinceTransformation = value; }
@@ -73,6 +77,8 @@ public class PlayerMovement : BaseEntityScript
             damage *= 0.5f;
             bulletCoolDown *= 2f;
             speed *= 0.75f;
+            audioSource.clip = transformationEnd;
+            audioSource.Play();
         }
         if (Input.GetKeyDown(KeyCode.F) && (timeTransformed < TransformationDurantion) && (LastTimeSinceTransformation > transformationCooldown) && !IsTransformed)
         {
@@ -82,6 +88,8 @@ public class PlayerMovement : BaseEntityScript
             damage *= 2;
             bulletCoolDown *= 0.5f;
             speed *= 1.25f;
+            audioSource.clip = transformationSound;
+            audioSource.Play();
             for (int i = 0; i < 20; i++) {
                 Bullet bullet = bulletPoolManager.GetBullet();
                 bullet.gameObject.SetActive(true);
@@ -129,6 +137,12 @@ public class PlayerMovement : BaseEntityScript
         if (!isInvulnerable && collision.CompareTag("EnemyBullet"))
         {
             float damage = collision.gameObject.GetComponent<Bullet>().Damage;
+            health -= damage;
+            isHit = true;
+            isInvulnerable = true;
+        }
+        if (collision.CompareTag("Enemy")) {
+            float damage = collision.gameObject.GetComponent<BaseEntityScript>().Damage;
             health -= damage;
             isHit = true;
             isInvulnerable = true;

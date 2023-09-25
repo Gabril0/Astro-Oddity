@@ -27,11 +27,19 @@ public class GameManager : MonoBehaviour
     //Evolutions
     [SerializeField] GameObject bigbang, cosmicFlow, cosmicHeal, cosmicStrength, galacticCannon, overWeight, storedEnergy, suddenDeath; //manually assign these
 
+
+    //MenuSounds
+    [SerializeField] AudioClip menuConfirmSoundEffect;
+    [SerializeField] AudioClip deathSound;
+    private AudioSource src;
     public bool PlayerCanEvolute { get => playerCanEvolute; set => playerCanEvolute = value; }
 
     void Start()
     {
         Time.timeScale = 1.0f;
+
+        src = GetComponent<AudioSource>();
+        src.clip = menuConfirmSoundEffect;
 
         choiceLeft = GameObject.Find("ButtonLeft").GetComponent<Image>();
         choiceMiddle = GameObject.Find("ButtonMiddle").GetComponent<Image>();
@@ -74,11 +82,9 @@ public class GameManager : MonoBehaviour
             
         }
         if (!player.IsAlive) {
-            deathCanvas.SetActive(true);
-            Time.timeScale = 0f;
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                SceneManager.LoadScene("SampleScene");
-            }
+            src.clip = deathSound;
+            src.Play();
+            displayDeathScreen();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -87,6 +93,15 @@ public class GameManager : MonoBehaviour
 
         }
 
+    }
+
+    private void displayDeathScreen() {
+        deathCanvas.SetActive(true);
+        Time.timeScale = 1f;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene("SampleScene");
+        }
     }
 
     private void randomizeEvolutions()
@@ -147,6 +162,7 @@ public class GameManager : MonoBehaviour
             randomizeEvolutions();
             buttonChoosed = -1;
             Time.timeScale = 1f;
+            src.Play();
         }
     }
 
@@ -155,11 +171,13 @@ public class GameManager : MonoBehaviour
     public void activateRight() { buttonChoosed = 2; confirmChoice(); }
 
     public void buttonGoMenu() {
+        src.Play();
         Time.timeScale = 1f;
         SceneManager.LoadScene("Menu");
     }
 
     public void buttonContinuePause() {
+        src.Play();
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
     }

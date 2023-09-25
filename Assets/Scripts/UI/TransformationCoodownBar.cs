@@ -8,10 +8,14 @@ public class TransformationCoodownBar : MonoBehaviour
 {
     private PlayerMovement player;
     private Image cooldownBar;
+    private AudioSource src;
+    [SerializeField] AudioClip refillSound;
+    private bool audioLock = false;
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<PlayerMovement>();
         cooldownBar = GetComponent<Image>();
+        src = GetComponent<AudioSource>();
         cooldownBar.fillAmount = 1;
     }
 
@@ -21,9 +25,15 @@ public class TransformationCoodownBar : MonoBehaviour
         if (player.IsTransformed)
         {
             cooldownBar.fillAmount = 0;
+            audioLock = false;
         }
         if (cooldownBar.fillAmount == 1)
         {
+            if (!audioLock) {
+                src.clip = refillSound;
+                src.Play();
+                audioLock = true;
+            }
             Color newColor = cooldownBar.color;
             newColor.a = 1.0f;
 

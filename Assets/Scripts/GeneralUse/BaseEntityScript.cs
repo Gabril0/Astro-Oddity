@@ -60,6 +60,9 @@ public class BaseEntityScript : MonoBehaviour
     private float timeSinceMultipleShot = 0;
     private bool isMoving = false;
     private float currentTime = 0f;
+
+    //Sound Effects
+    protected AudioSource audioSource;
     void Start()
     {
         originalSpeed = speed;
@@ -84,6 +87,8 @@ public class BaseEntityScript : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<PlayerMovement>();
 
         animator.SetBool("Explosion", false);
+
+        audioSource = GetComponent<AudioSource>();
 
         startVariation();
 
