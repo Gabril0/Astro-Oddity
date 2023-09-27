@@ -21,7 +21,8 @@ public class FireEnemy : Dummy
         
         if (conditionToShoot && timeSinceLastShot > bulletCoolDown)
         {
-            
+            audioSource.clip = multipleShotSound;
+            audioSource.Play();
             Bullet bullet = bulletPoolManager.GetBullet();
             bullet.transform.position = transform.position;
             bullet.transform.rotation = transform.rotation * Quaternion.Euler(0, 0, bulletAngle);

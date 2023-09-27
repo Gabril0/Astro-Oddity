@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7935946434335360093
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 930434303987053512, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5330188
+      objectReference: {fileID: 0}
+    - target: {fileID: 930434303987053512, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 930434303987053512, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: m_Color.r
+      value: 0.69604635
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153216735940158303, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153216735940158303, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.7476382
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153216735940158303, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.3116658
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153216735940158303, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153216735940158303, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153216735940158303, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153216735940158303, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153216735940158303, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153216735940158303, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153216735940158303, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153216735940158303, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153216735940158303, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2911659120403234289, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: m_Name
+      value: MirrorEnemyGreenVariant(Health)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7999403745016615152, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}
+      propertyPath: health
+      value: 20000
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5190a7f435c880142a3a354fa816cf8d, type: 3}

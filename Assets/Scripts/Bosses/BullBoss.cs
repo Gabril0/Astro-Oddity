@@ -18,14 +18,13 @@ public class BullBoss : BaseBossBehaviour
     override
     protected void variation()
     {
-        Debug.Log(currentRotation);
         if (!isExhausted)
         {
             rotationTimer += Time.deltaTime;
             if (rotationTimer >= rotationInterval)
             {
                 transform.Rotate(0, 0, currentRotation);
-                currentRotation += 1;
+                currentRotation += 4;
                 if (currentRotation > 360) {
                     rotationTimer = 0f;
                     currentRotation = 0;

@@ -14,18 +14,23 @@ public class StarEnemy : Dummy
     override
     protected void startVariation()
     {
-        orbitCenter = new  Vector2(transform.position.x,transform.position.y);
+        orbitCenter = new  Vector2(transform.position.x * 4.5f,transform.position.y * 4.5f);
     }
     private void FixedUpdate()
     {
-        Orbit();
-        starShoot(true);
+        if (IsAlive) {
+            Orbit();
+            starShoot(true);
+        }
+        
     }
 
     protected void starShoot(bool conditionToShoot)
     {
         if (conditionToShoot && timeSinceLastShot > bulletCoolDown)
         {
+            audioSource.clip = multipleShotSound;
+            audioSource.Play();
             float bulletAngle = 90;
             for (int i = 0; i < 5; i++)
                 bullets[i] = bulletPoolManager.GetBullet();

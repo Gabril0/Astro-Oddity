@@ -31,15 +31,20 @@ public class GameManager : MonoBehaviour
     //MenuSounds
     [SerializeField] AudioClip menuConfirmSoundEffect;
     [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip evolutionTheme;
     private AudioSource src;
+    private bool deathAnimationAudioLock = false;
+    private bool evolutionAudioLock = false;
     public bool PlayerCanEvolute { get => playerCanEvolute; set => playerCanEvolute = value; }
 
     void Start()
     {
         Time.timeScale = 1.0f;
 
+        deathAnimationAudioLock = false;
+        evolutionAudioLock = false;
+
         src = GetComponent<AudioSource>();
-        src.clip = menuConfirmSoundEffect;
 
         choiceLeft = GameObject.Find("ButtonLeft").GetComponent<Image>();
         choiceMiddle = GameObject.Find("ButtonMiddle").GetComponent<Image>();
@@ -56,8 +61,8 @@ public class GameManager : MonoBehaviour
         pauseMenu = GameObject.Find("Pause");
         pauseMenu.SetActive(false);
 
-        evolutionTable.Add(1,cosmicFlow);
-        evolutionTable.Add(2,bigbang);
+        evolutionTable.Add(1, cosmicFlow);
+        evolutionTable.Add(2, bigbang);
         evolutionTable.Add(3, cosmicHeal);
         evolutionTable.Add(4, cosmicStrength);
         evolutionTable.Add(5, galacticCannon);
@@ -76,18 +81,19 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0f;
             if (!isChoosing)
             {
-                isChoosing=true;
+                isChoosing = true;
                 displayChoices();
             }
-            
+
         }
-        if (!player.IsAlive) {
-            src.clip = deathSound;
-            src.Play();
+        if (!player.IsAlive)
+        {
             displayDeathScreen();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
             Time.timeScale = 0f;
             pauseMenu.SetActive(true);
 
@@ -95,9 +101,15 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void displayDeathScreen() {
+    private void displayDeathScreen()
+    {
+        if (!deathAnimationAudioLock) {
+            src.clip = deathSound;
+            src.Play();
+            deathAnimationAudioLock = true;
+        }
         deathCanvas.SetActive(true);
-        Time.timeScale = 1f;
+        Time.timeScale = 0f;
         if (Input.GetKeyDown(KeyCode.Space))
         {
             SceneManager.LoadScene("SampleScene");
@@ -126,11 +138,16 @@ public class GameManager : MonoBehaviour
     {
 
         buttonSelector.SetActive(true);
+        if (!evolutionAudioLock) {
+            src.clip = evolutionTheme; //later change this to play with the songs
+            src.Play();
+            evolutionAudioLock = true;
+        }
 
         for (int i = 0; i < 3; i++)
         {
             choices[i] = (GameObject)evolutionTable[randomIndex[i]];
-            choices[i] = Instantiate((GameObject)evolutionTable[randomIndex[i]],new Vector3(10000,0,0),transform.rotation);
+            choices[i] = Instantiate((GameObject)evolutionTable[randomIndex[i]], new Vector3(10000, 0, 0), transform.rotation);
         }
         choiceLeft.sprite = choices[0].GetComponentInChildren<SpriteRenderer>().sprite;
         choiceMiddle.sprite = choices[1].GetComponentInChildren<SpriteRenderer>().sprite;
@@ -162,21 +179,26 @@ public class GameManager : MonoBehaviour
             randomizeEvolutions();
             buttonChoosed = -1;
             Time.timeScale = 1f;
+            src.clip = menuConfirmSoundEffect;
             src.Play();
         }
     }
 
-    public void activateLeft() {buttonChoosed = 0;confirmChoice(); }
-    public void activateMiddle() {buttonChoosed = 1; confirmChoice(); }
+    public void activateLeft() { buttonChoosed = 0; confirmChoice(); }
+    public void activateMiddle() { buttonChoosed = 1; confirmChoice(); }
     public void activateRight() { buttonChoosed = 2; confirmChoice(); }
 
-    public void buttonGoMenu() {
+    public void buttonGoMenu()
+    {
+        src.clip = menuConfirmSoundEffect;
         src.Play();
         Time.timeScale = 1f;
         SceneManager.LoadScene("Menu");
     }
 
-    public void buttonContinuePause() {
+    public void buttonContinuePause()
+    {
+        src.clip = menuConfirmSoundEffect;
         src.Play();
         pauseMenu.SetActive(false);
         Time.timeScale = 1;

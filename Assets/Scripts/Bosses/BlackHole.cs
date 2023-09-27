@@ -17,7 +17,7 @@ public class BlackHole : BaseBossBehaviour
         } 
         else{
             multipleShotCooldown = 1f;
-            multipleShot(25);
+            multipleShot(15);
         }
 
         if (stateTime > stateTransitionTime) { 

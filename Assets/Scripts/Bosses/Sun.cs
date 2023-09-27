@@ -19,16 +19,31 @@ public class Sun : BaseBossBehaviour
 
         if (stateTime > stateCooldown)
         {
-
-            currentState = Random.Range(1, 4);
+            currentState = Random.Range(1, 5);
             stateTime = 0;
         }
+        if (health < 5000) {
+            state1();
+            state2();
+            state3();
+        }
+
         switch (currentState)
         {
-            case 1: state1();state4(); break;
-            case 2: state2();state4(); break;
-            case 3: state3();state4(); break;
-            default: state4(); break;
+            case 1:
+                state1();
+                break;
+            case 2:
+                state2();
+                break;
+            case 3:
+                state3();
+                break;
+            case 4:
+                state4();
+                break;
+            default:
+                break;
         }
     }
 
@@ -37,11 +52,11 @@ public class Sun : BaseBossBehaviour
         elapsedTimeState1 += Time.deltaTime;
         if (elapsedTimeState1 < 0.2f)
         {
-            multipleShot(30);
+            multipleShot(15);
         }
         if (elapsedTimeState1 < 0.3f) {
 
-            multipleShot(15);
+            multipleShot(10);
             elapsedTimeState1 = 0;
         }
 
@@ -64,7 +79,8 @@ public class Sun : BaseBossBehaviour
         }
     }
 
-    private void state4() {// nothing, for the player to rest
-        stateTime += stateCooldown - 2;
+    private void state4() {// combination of 1 and 2
+        state1();
+        state2();
     }
 }

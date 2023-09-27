@@ -26,6 +26,7 @@ public class PlayerMovement : BaseEntityScript
     //Sound Effects
     [SerializeField] AudioClip transformationSound;
     [SerializeField] AudioClip transformationEnd;
+    [SerializeField] AudioSource transformationAudio;
 
     public bool IsTransformed { get => isTransformed; set => isTransformed = value; }
     public float TransformationDurantion { get => transformationDurantion; set => transformationDurantion = value; }
@@ -77,8 +78,8 @@ public class PlayerMovement : BaseEntityScript
             damage *= 0.5f;
             bulletCoolDown *= 2f;
             speed *= 0.75f;
-            audioSource.clip = transformationEnd;
-            audioSource.Play();
+            transformationAudio.clip = transformationEnd;
+            transformationAudio.Play();
         }
         if (Input.GetKeyDown(KeyCode.F) && (timeTransformed < TransformationDurantion) && (LastTimeSinceTransformation > transformationCooldown) && !IsTransformed)
         {
@@ -88,8 +89,8 @@ public class PlayerMovement : BaseEntityScript
             damage *= 2;
             bulletCoolDown *= 0.5f;
             speed *= 1.25f;
-            audioSource.clip = transformationSound;
-            audioSource.Play();
+            transformationAudio.clip = transformationSound;
+            transformationAudio.Play();
             for (int i = 0; i < 20; i++) {
                 Bullet bullet = bulletPoolManager.GetBullet();
                 bullet.gameObject.SetActive(true);

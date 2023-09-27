@@ -11,8 +11,7 @@ public class MoonEnemy : Dummy
     private bool state;
     private float timer = 0;
 
-    private void Awake()
-    {
+    protected override void startVariation(){
         follower = GetComponent<WaypointFollower>();
     }
 
@@ -38,6 +37,8 @@ public class MoonEnemy : Dummy
     {
         if (timeSinceLastShot > bulletCoolDown)
         {
+            audioSource.clip = shootSound;
+            audioSource.Play();
             float bulletAngle = 270 - 45;
             for (int i = 0; i < 3; i++)
                 bullets[i] = bulletPoolManager.GetBullet();

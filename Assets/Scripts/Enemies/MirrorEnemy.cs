@@ -1,22 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class MirrorEnemy : BaseEntityScript
 {
-    private GameObject player;
-
-    private void Awake()
-    {
-        player = GameObject.Find("Player");
-    }
-
     override protected void variation()
     {
         rotateToPosition(player.transform.position, transform.position);
     }
     protected void shoot()
     {
+        audioSource.clip = shootSound;
+        audioSource.Play();
         Bullet bullet = bulletPoolManager.GetBullet();
         bullet.transform.position = transform.position;
         bullet.transform.rotation = transform.rotation * Quaternion.Euler(0, 0, -90);

@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WaveManager : MonoBehaviour
 {
     public List<Wave> waves; 
     private int currentWaveIndex = 0; 
-    private int remainingEnemies; 
+    private int remainingEnemies;
+    private string sceneName;
 
     void Start()
     {
+        sceneName = SceneManager.GetActiveScene().name;
         startWave();
     }
 
@@ -36,7 +39,17 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
-            //Debug.Log("Go to next stage");
+            if (sceneName == "SampleScene") {
+                SceneManager.LoadScene("Stage2");
+            }
+            if (sceneName == "Stage2")
+            {
+                SceneManager.LoadScene("Stage3");
+            }
+            if (sceneName == "Stage3")
+            {
+                Debug.Log("You won!!");
+            }
         }
     }
 

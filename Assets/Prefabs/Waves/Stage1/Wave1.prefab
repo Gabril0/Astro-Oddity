@@ -44,5 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47504403276178a4998120f7c0feb610, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesToSpawn: []
-  spawnPoints: []
+  enemiesToSpawn:
+  - {fileID: 7213180334875261212, guid: 336f066cc5544011aacb7f5dd40644cb, type: 3}
+  spawnPoints:
+  - {x: -6, y: 3, z: 0}
