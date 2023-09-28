@@ -309,6 +309,7 @@ MonoBehaviour:
   movementCooldown: 1
   movementDuration: 1
   shootSound: {fileID: 8300000, guid: 0ecdf88683eb83d4f85c42eb90cf59f4, type: 3}
+  spawnSound: {fileID: 8300000, guid: 05ff0736711ef9d45ab497afbb46bd55, type: 3}
   multipleShotSound: {fileID: 8300000, guid: a6c4c7523b146794aa91556809d74052, type: 3}
   deathSound: {fileID: 8300000, guid: d9df340fe51c88542944f783e41c2ee3, type: 3}
   playerBullet: {fileID: 2929854149448098888, guid: 37064326de56ca843a9317e0897cc173, type: 3}

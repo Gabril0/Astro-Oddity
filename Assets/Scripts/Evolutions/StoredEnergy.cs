@@ -14,7 +14,7 @@ public class StoredEnergy : MonoBehaviour, Evolution
     public void makeChanges()
     {
         player.BulletCoolDown = player.BulletCoolDown * 0.5f;
-        player.Damage = player.Damage * 0.3f;
+        player.Damage = player.Damage * 0.6f;
     }
 
     public SpriteRenderer getImage()

@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     GameObject[] choices = new GameObject[3];
     private PlayerMovement player;
 
+    private bool deathCounterLock = false;
+
     //Buttons and Canvas
     private GameObject buttonSelector;
     private Image choiceLeft, choiceRight, choiceMiddle;
@@ -40,6 +42,13 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1.0f;
+
+        if (SceneManager.GetActiveScene().name == "SampleScene") { //reseting the timer
+            PlayerDataManager playerDataManager = GameObject.Find("PlayerDataManager")?.GetComponent<PlayerDataManager>();
+            PlayerData playerData = playerDataManager.playerData;
+            playerData.totalTime = 0;
+        }
+
 
         deathAnimationAudioLock = false;
         evolutionAudioLock = false;
@@ -88,6 +97,18 @@ public class GameManager : MonoBehaviour
         }
         if (!player.IsAlive)
         {
+            if (!deathCounterLock)
+            {
+                if (!PlayerPrefs.HasKey("Deaths"))
+                {
+                    PlayerPrefs.SetInt("Deaths", 0);
+                    PlayerPrefs.Save();
+                }
+                int deaths = PlayerPrefs.GetInt("Deaths");
+                deaths++;
+                PlayerPrefs.SetInt("Deaths", deaths);
+                deathCounterLock = true;
+            }
             displayDeathScreen();
         }
 
@@ -98,6 +119,7 @@ public class GameManager : MonoBehaviour
             pauseMenu.SetActive(true);
 
         }
+
 
     }
 

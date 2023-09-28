@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : BaseEntityScript
 {
-
     private bool isShooting = false;
 
     //transformation
@@ -15,6 +15,7 @@ public class PlayerMovement : BaseEntityScript
     private bool isTransformed = false;
     private float timeTransformed = 0;
     private float lastTimeSinceTransformation = 12;
+    private float speedBeforeTransformation, damageBeforeTransformation, bulletCDBeforeTransformation;
 
     //invunerability related
     private bool isInvulnerable = false;
@@ -31,6 +32,33 @@ public class PlayerMovement : BaseEntityScript
     public bool IsTransformed { get => isTransformed; set => isTransformed = value; }
     public float TransformationDurantion { get => transformationDurantion; set => transformationDurantion = value; }
     public float LastTimeSinceTransformation { get => lastTimeSinceTransformation; set => lastTimeSinceTransformation = value; }
+
+    protected override void startVariation()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+        PlayerDataManager playerDataManager = GameObject.Find("PlayerDataManager")?.GetComponent<PlayerDataManager>();
+
+
+        sceneName = SceneManager.GetActiveScene().name;
+        PlayerData playerData = playerDataManager.playerData;
+
+        if (sceneName == "SampleScene")
+        {
+            playerData.playerDamage = originalDamage;
+            playerData.playerHealth = originalHealth;
+            playerData.playerSpeed = originalSpeed;
+            playerData.playerBulletCooldown = bulletCoolDown;
+            playerData.playerSlowDown = false;
+        }
+        else
+        {
+            damage = playerData.playerDamage;
+            health = playerData.playerHealth;
+            speed = playerData.playerSpeed;
+            bulletCoolDown = playerData.playerBulletCooldown;
+            isSlowedDownShooting = playerData.playerSlowDown;
+        }
+    }
 
     protected override void variation()
     {
@@ -75,9 +103,9 @@ public class PlayerMovement : BaseEntityScript
             timeTransformed = 0;
             LastTimeSinceTransformation = 0;
             IsTransformed = false;
-            damage *= 0.5f;
-            bulletCoolDown *= 2f;
-            speed *= 0.75f;
+            damage = damageBeforeTransformation;
+            bulletCoolDown = bulletCDBeforeTransformation;
+            speed = speedBeforeTransformation;
             transformationAudio.clip = transformationEnd;
             transformationAudio.Play();
         }
@@ -86,6 +114,11 @@ public class PlayerMovement : BaseEntityScript
             float shootRotation = 0;
             IsTransformed = true;
             isInvulnerable = true;
+
+            damageBeforeTransformation = damage;
+            bulletCDBeforeTransformation = bulletCoolDown;
+            speedBeforeTransformation = speed;
+
             damage *= 2;
             bulletCoolDown *= 0.5f;
             speed *= 1.25f;

@@ -9,10 +9,12 @@ public class WaveManager : MonoBehaviour
     private int currentWaveIndex = 0; 
     private int remainingEnemies;
     private string sceneName;
+    private PlayerMovement player;
 
     void Start()
     {
         sceneName = SceneManager.GetActiveScene().name;
+        player = GameObject.Find("Player").GetComponent<PlayerMovement>();
         startWave();
     }
 
@@ -39,6 +41,14 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
+            PlayerDataManager playerDataManager = GameObject.Find("PlayerDataManager")?.GetComponent<PlayerDataManager>();
+            PlayerData playerData = playerDataManager.playerData;
+            playerData.playerDamage = player.Damage;
+            playerData.playerHealth = player.Health;
+            playerData.playerSpeed = player.Speed;
+            playerData.playerBulletCooldown = player.BulletCoolDown;
+            playerData.playerSlowDown = player.IsSlowedDownShooting;
+
             if (sceneName == "SampleScene") {
                 SceneManager.LoadScene("Stage2");
             }
@@ -48,7 +58,16 @@ public class WaveManager : MonoBehaviour
             }
             if (sceneName == "Stage3")
             {
-                Debug.Log("You won!!");
+                if (!PlayerPrefs.HasKey("BestTime"))
+                {
+                    PlayerPrefs.SetFloat("BestTime", GameObject.Find("Timer").GetComponentInChildren<Timer>().Time);
+                    PlayerPrefs.Save();
+                }
+                if (PlayerPrefs.GetFloat("BestTime") > GameObject.Find("Timer").GetComponentInChildren<Timer>().Time) {
+                    PlayerPrefs.SetFloat("BestTime", GameObject.Find("Timer").GetComponentInChildren<Timer>().Time);
+                    PlayerPrefs.Save();
+                }
+                SceneManager.LoadScene("Ending");
             }
         }
     }

@@ -13,8 +13,8 @@ public class Overweight : MonoBehaviour, Evolution
     }
     public void makeChanges()
     {
-        player.Damage = player.Damage * 2f;
-        player.Speed = player.Speed * 0.5f;
+        player.Damage = player.Damage * 4f;
+        player.Speed = player.Speed * 0.75f;
     }
     public SpriteRenderer getImage()
     {

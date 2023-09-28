@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] Image howToPlay;
+    [SerializeField] GameObject score;
     //MenuSounds
     [SerializeField] AudioClip menuConfirmSoundEffect;
     private AudioSource src;
@@ -30,7 +31,12 @@ public class MenuManager : MonoBehaviour
 
     public void clickStats() {
         src.Play();
-        //WIP
+        score.gameObject.SetActive(true);
+    }
+
+    public void clickExitScore() {
+        src.Play();
+        score.gameObject.SetActive(false);
     }
 
     public void clickExitHowToPlay() {
