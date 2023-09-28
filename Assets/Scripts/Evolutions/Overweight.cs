@@ -13,6 +13,12 @@ public class Overweight : MonoBehaviour, Evolution
     }
     public void makeChanges()
     {
+        if (player.IsTransformed)
+        {
+            player.speedBeforeTransformation = player.speedBeforeTransformation * 0.75f;
+
+            player.damageBeforeTransformation = player.damageBeforeTransformation * 4f;
+        }
         player.Damage = player.Damage * 4f;
         player.Speed = player.Speed * 0.75f;
     }

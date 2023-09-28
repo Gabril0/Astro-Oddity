@@ -13,6 +13,11 @@ public class StoredEnergy : MonoBehaviour, Evolution
     }
     public void makeChanges()
     {
+        if (player.IsTransformed)
+        {
+            player.bulletCDBeforeTransformation = player.bulletCDBeforeTransformation * 0.5f;
+            player.damageBeforeTransformation = player.damageBeforeTransformation * 0.6f;
+        }
         player.BulletCoolDown = player.BulletCoolDown * 0.5f;
         player.Damage = player.Damage * 0.6f;
     }

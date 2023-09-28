@@ -13,6 +13,11 @@ public class CosmicFlow : MonoBehaviour, Evolution
     }
     public void makeChanges()
     {
+        if (player.IsTransformed)
+        {
+            player.bulletCDBeforeTransformation = player.bulletCDBeforeTransformation * 0.5f;
+
+        }
         player.BulletCoolDown = player.BulletCoolDown * 0.5f;
 
 

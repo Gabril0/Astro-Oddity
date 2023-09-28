@@ -15,7 +15,7 @@ public class PlayerMovement : BaseEntityScript
     private bool isTransformed = false;
     private float timeTransformed = 0;
     private float lastTimeSinceTransformation = 12;
-    private float speedBeforeTransformation, damageBeforeTransformation, bulletCDBeforeTransformation;
+    public float speedBeforeTransformation, damageBeforeTransformation, bulletCDBeforeTransformation;
 
     //invunerability related
     private bool isInvulnerable = false;

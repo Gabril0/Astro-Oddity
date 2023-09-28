@@ -13,6 +13,10 @@ public class SuddenDeath : MonoBehaviour, Evolution
     }
     public void makeChanges()
     {
+        if (player.IsTransformed)
+        {
+            player.damageBeforeTransformation = player.damageBeforeTransformation * 10f;
+        }
         player.Health = player.Health * 0.01f;
         player.Damage = player.Damage * 10f;
 

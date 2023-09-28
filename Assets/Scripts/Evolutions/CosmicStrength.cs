@@ -13,6 +13,10 @@ public class CosmicStrength : MonoBehaviour, Evolution
     }
     public void makeChanges()
     {
+        if (player.IsTransformed)
+        {
+            player.damageBeforeTransformation = player.damageBeforeTransformation * 2f;
+        }
         player.Damage = player.Damage * 2f;
 
 
