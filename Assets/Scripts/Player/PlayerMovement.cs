@@ -42,6 +42,8 @@ public class PlayerMovement : BaseEntityScript
         sceneName = SceneManager.GetActiveScene().name;
         PlayerData playerData = playerDataManager.playerData;
 
+        
+
         if (sceneName == "SampleScene")
         {
             playerData.playerDamage = originalDamage;
@@ -58,6 +60,10 @@ public class PlayerMovement : BaseEntityScript
             bulletCoolDown = playerData.playerBulletCooldown;
             isSlowedDownShooting = playerData.playerSlowDown;
         }
+
+        speedBeforeTransformation = speed;
+        damageBeforeTransformation = damage;
+        bulletCDBeforeTransformation = bulletCoolDown;
     }
 
     protected override void variation()

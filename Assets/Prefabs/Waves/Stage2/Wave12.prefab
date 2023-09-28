@@ -47,4 +47,4 @@ MonoBehaviour:
   enemiesToSpawn:
   - {fileID: 4918721591683619194, guid: 9626c80fa4b9fea4d8071b97db0982ce, type: 3}
   spawnPoints:
-  - {x: 5, y: 5, z: 0}
+  - {x: 7, y: 3.5, z: 0}

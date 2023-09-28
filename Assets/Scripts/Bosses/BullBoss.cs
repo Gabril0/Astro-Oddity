@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BullBoss : BaseBossBehaviour
 {
-    private bool isExhausted = false;
+    private bool isExhausted = true;
     private float rotationTimer = 0.0f;
     [SerializeField] float rotationInterval = 2.0f;
     private float currentRotation = 0f;
@@ -14,6 +14,7 @@ public class BullBoss : BaseBossBehaviour
     protected void startVariation(){
         speed = player.Speed * 0.75f;
         originalSpeed = speed;
+        speed *= 2;
     }
     override
     protected void variation()

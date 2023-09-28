@@ -8,12 +8,16 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject score;
     //MenuSounds
     [SerializeField] AudioClip menuConfirmSoundEffect;
-    private AudioSource src;
+    [SerializeField] AudioClip menuSong;
+    [SerializeField] AudioSource src;
+    [SerializeField] AudioSource musicPlayer;
 
-    private void Start()
+    private void Awake()
     {
         src = GetComponent<AudioSource>();
         src.clip = menuConfirmSoundEffect;
+        musicPlayer.clip = menuSong;
+        musicPlayer.Play();
     }
 
     public void clickHowToPlay() {

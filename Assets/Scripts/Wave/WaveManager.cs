@@ -43,10 +43,10 @@ public class WaveManager : MonoBehaviour
         {
             PlayerDataManager playerDataManager = GameObject.Find("PlayerDataManager")?.GetComponent<PlayerDataManager>();
             PlayerData playerData = playerDataManager.playerData;
-            playerData.playerDamage = player.Damage;
+            playerData.playerDamage = player.damageBeforeTransformation;
             playerData.playerHealth = player.Health;
-            playerData.playerSpeed = player.Speed;
-            playerData.playerBulletCooldown = player.BulletCoolDown;
+            playerData.playerSpeed = player.speedBeforeTransformation;
+            playerData.playerBulletCooldown = player.bulletCDBeforeTransformation;
             playerData.playerSlowDown = player.IsSlowedDownShooting;
 
             if (sceneName == "SampleScene") {
