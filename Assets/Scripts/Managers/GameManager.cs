@@ -34,7 +34,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioClip menuConfirmSoundEffect;
     [SerializeField] AudioClip deathSound;
     [SerializeField] AudioClip evolutionTheme;
-    private AudioSource src;
+    [SerializeField] AudioClip stageTheme;
+    [SerializeField] AudioClip deathTheme;
+    [SerializeField] private AudioSource src;
+    [SerializeField] private AudioSource bg;
     private bool deathAnimationAudioLock = false;
     private bool evolutionAudioLock = false;
     public bool PlayerCanEvolute { get => playerCanEvolute; set => playerCanEvolute = value; }
@@ -79,6 +82,9 @@ public class GameManager : MonoBehaviour
         evolutionTable.Add(7, storedEnergy);
         evolutionTable.Add(8, suddenDeath);
         randomizeEvolutions();
+
+        bg.clip = stageTheme;
+        bg.Play();
     }
 
     // Update is called once per frame
@@ -129,6 +135,10 @@ public class GameManager : MonoBehaviour
             src.clip = deathSound;
             src.Play();
             deathAnimationAudioLock = true;
+
+            bg.Stop();
+            bg.clip = deathTheme;
+            bg.Play();
         }
         deathCanvas.SetActive(true);
         Time.timeScale = 0f;
@@ -164,6 +174,8 @@ public class GameManager : MonoBehaviour
             src.clip = evolutionTheme; //later change this to play with the songs
             src.Play();
             evolutionAudioLock = true;
+
+            bg.Stop();
         }
 
         for (int i = 0; i < 3; i++)
@@ -203,6 +215,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1f;
             src.clip = menuConfirmSoundEffect;
             src.Play();
+            bg.Play();
         }
     }
 
