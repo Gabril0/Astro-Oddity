@@ -10,9 +10,11 @@ public class WaveManager : MonoBehaviour
     private int remainingEnemies;
     private string sceneName;
     private PlayerMovement player;
+    private Timer timer;
 
     void Start()
     {
+        timer = GameObject.Find("Timer").GetComponentInChildren<Timer>();
         sceneName = SceneManager.GetActiveScene().name;
         player = GameObject.Find("Player").GetComponent<PlayerMovement>();
         startWave();
@@ -50,10 +52,12 @@ public class WaveManager : MonoBehaviour
             playerData.playerSlowDown = player.IsSlowedDownShooting;
 
             if (sceneName == "SampleScene") {
+                playerData.totalTime = timer.Time;
                 SceneManager.LoadScene("Stage2");
             }
             if (sceneName == "Stage2")
             {
+                playerData.totalTime = timer.Time;
                 SceneManager.LoadScene("Stage3");
             }
             if (sceneName == "Stage3")
@@ -67,6 +71,7 @@ public class WaveManager : MonoBehaviour
                     PlayerPrefs.SetFloat("BestTime", GameObject.Find("Timer").GetComponentInChildren<Timer>().Time);
                     PlayerPrefs.Save();
                 }
+                playerData.totalTime = timer.Time;
                 SceneManager.LoadScene("Ending");
             }
         }
