@@ -9,9 +9,7 @@ Welcome to the Astro-Oddity project, a recreation of a game originally developed
 Download the latest version [here](https://github.com/Gabril0/Astro-Oddity/releases/tag/v0.1).
 
 ## Game Description
-Astro-Oddity is an exciting space game where you explore the universe, battle aliens, and collect resources to upgrade your spaceship.
-
-![Game Screenshot](link-to-screenshot.png)
+Astro-Oddity is an space shooter with lots of bullets, a very hard game but really short. Can you beat the game the fastest? Try using the Stats to see your best time and compare it to your friends!! 🏆
 
 ## Credits
 This project was created by [Gabril0](https://github.com/Gabril0) and [roddrigoqueiroz](https://github.com/roddrigoqueiroz) as part of a college project.
